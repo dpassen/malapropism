@@ -10,68 +10,58 @@
   (:import
    (java.io PushbackReader)))
 
-(def ^:private config-schema
-  (atom nil))
-
-(def ^:private config-values
-  (atom nil))
-
 (defn- schema-keys
-  []
+  [config-schema]
   (m/walk
-   @config-schema
+   config-schema
    (fn [schema _ children _options]
      (let [children (if (m/entries schema)
                       (filter last children)
                       children)]
        (map first children)))))
 
-(defn set-schema!
-  [schema]
-  (reset! config-schema schema)
-  (reset! config-values nil))
+(defn with-schema
+  [config-schema]
+  [config-schema nil])
 
-(defn map->values
-  [m]
-  (let [values (select-keys m (schema-keys))]
+(defn with-values-from-map
+  [[config-schema config-values] m]
+  (let [values (select-keys m (schema-keys config-schema))]
     (log/infof "Populating, %d values" (count values))
-    (swap! config-values merge values)))
+    [config-schema (merge config-values values)]))
 
-(defn file->values
-  [file]
+(defn with-values-from-file
+  [config file]
   (log/info "Populating from file")
-  (-> (io/reader file)
-      (PushbackReader.)
-      edn/read
-      map->values))
+  (with-values-from-map
+    config
+    (-> (io/reader file)
+        (PushbackReader.)
+        edn/read)))
 
-(defn env->values
-  []
+(defn with-values-from-env
+  [config]
   (log/info "Populating from env")
-  (->> (System/getenv)
-       (into {})
-       (cske/transform-keys csk/->kebab-case-keyword)
-       map->values))
+  (with-values-from-map
+    config
+    (->> (System/getenv)
+         (into {})
+         (cske/transform-keys csk/->kebab-case-keyword))))
 
 (defn verify!
-  ([]
-   (verify! nil))
-  ([verbose?]
-   (when-not (m/validate @config-schema @config-values)
-     (let [explanation (m/explain @config-schema @config-values)]
+  ([config]
+   (verify! config nil))
+  ([[config-schema config-values] verbose?]
+   (if (m/validate config-schema config-values)
+     config-values
+     (let [explanation (m/explain config-schema config-values)]
        (throw
         (ex-info
          "Config values do not match schema!"
          (cond->
           {:humanized (me/humanize explanation)
-           :schema    @config-schema}
+           :schema    config-schema}
 
            verbose?
            (assoc :explanation explanation
-                  :values @config-values))))))))
-
-(defn lookup
-  ([key]
-   (lookup key nil))
-  ([key not-found]
-   (get @config-values key not-found)))
+                  :values config-values))))))))
