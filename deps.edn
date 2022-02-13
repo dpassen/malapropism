@@ -1,8 +1,13 @@
 {:paths ["src"]
  :deps
- {org.clojure/clojure       {:mvn/version "1.10.3"}
-  org.clojure/tools.logging {:mvn/version "1.2.4"}
-  metosin/malli             {:mvn/version "0.8.1"}}
+ {org.clojure/clojure
+  {:mvn/version "1.10.3"}
+  org.clojure/tools.logging
+  {:mvn/version "1.2.4"}
+  camel-snake-kebab/camel-snake-kebab
+  {:mvn/version "0.4.2"}
+  metosin/malli
+  {:mvn/version "0.8.1"}}
  :aliases
  {:test
   {:extra-deps
