@@ -65,3 +65,25 @@
            verbose?
            (assoc :explanation explanation
                   :values config-values))))))))
+
+(comment
+  (def config-schema
+    [:map
+     [:env-key
+      {:optional true
+       :title    "environment key"}
+      :keyword]
+     [:scm-rev
+      {:optional true
+       :title    "scm revision"}
+      :string]])
+
+  (->
+   (with-schema config-schema)
+   (with-values-from-env)
+   (with-values-from-map
+     {:env-key :dev
+      :scm-rev "923345"})
+   (verify! ::verbose))
+
+  ,)
