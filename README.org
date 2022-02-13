@@ -1,0 +1,3 @@
+# -*- coding: utf-8 -*-
+#+TITLE: malapropism
+An [[https://github.com/grammarly/omniconf][omniconf]] inspired config library using [[https://github.com/metosin/malli][malli]]
