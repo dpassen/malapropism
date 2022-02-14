@@ -2,7 +2,7 @@ default:
 	@just --list
 
 test:
-    @clojure -X:test
+	@clojure -X:test
 
 lint:
-    @clj-kondo --parallel --lint src test
+	@clj-kondo --parallel --lint src test
