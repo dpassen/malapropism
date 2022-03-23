@@ -1,7 +1,6 @@
 (ns org.passen.malapropism.core
   (:require
    [camel-snake-kebab.core :as csk]
-   [camel-snake-kebab.extras :as cske]
    [clojure.edn :as edn]
    [clojure.java.io :as io]
    [clojure.tools.logging :as log]
@@ -44,9 +43,9 @@
   (log/info "Populating from env")
   (with-values-from-map
     config
-    (->> (System/getenv)
-         (into {})
-         (cske/transform-keys csk/->kebab-case-keyword))))
+    (-> (System/getenv)
+        (into {})
+        (update-keys csk/->kebab-case-keyword))))
 
 (defn verify!
   ([config]
@@ -78,12 +77,11 @@
        :title    "scm revision"}
       :string]])
 
-  (->
-   (with-schema config-schema)
-   (with-values-from-env)
-   (with-values-from-map
-     {:env-key :dev
-      :scm-rev "923345"})
-   (verify! ::verbose))
+  (-> (with-schema config-schema)
+      (with-values-from-env)
+      (with-values-from-map
+        {:env-key :dev
+         :scm-rev "923345"})
+      (verify! ::verbose))
 
   ,)
