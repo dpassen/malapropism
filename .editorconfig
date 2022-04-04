@@ -12,4 +12,4 @@ insert_final_newline = true
 indent_style = space
 
 [justfile]
-indent_style = tab
+indent_style = space
