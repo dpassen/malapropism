@@ -5,7 +5,7 @@
   org.clojure/tools.logging
   {:mvn/version "1.2.4"}
   camel-snake-kebab/camel-snake-kebab
-  {:mvn/version "0.4.2"}
+  {:mvn/version "0.4.3"}
   metosin/malli
   {:mvn/version "0.8.4"}}
  :aliases
