@@ -2,9 +2,7 @@
   (:require
    [clojure.test :refer [deftest is testing]]
    [matcher-combinators.test]
-   [org.passen.malapropism.core :as malapropism])
-  (:import
-   (clojure.lang ExceptionInfo)))
+   [org.passen.malapropism.core :as malapropism]))
 
 (deftest validate
   (let [schema [:map
@@ -19,20 +17,23 @@
     (testing "an exception is thrown with unacceptable values"
       (let [values {:foo 23.4
                     :bar [\e \g \g \s]}]
-        (is (thrown-match? ExceptionInfo {:schema    schema
-                                          :humanized {:foo vector?
-                                                      :bar vector?}}
-                           (-> (malapropism/with-schema schema)
-                               (malapropism/with-values-from-map values)
-                               (malapropism/verify!))))))
+        (is (thrown-match?
+             {:schema schema
+              :humanized
+              {:foo vector?
+               :bar vector?}}
+             (-> (malapropism/with-schema schema)
+                 (malapropism/with-values-from-map values)
+                 (malapropism/verify!))))))
     (testing "verbose verify includes more data"
       (let [values {:foo 23.4
                     :bar [\e \g \g \s]}]
-        (is (thrown-match? ExceptionInfo {:schema    schema
-                                          :humanized {:foo vector?
-                                                      :bar vector?}
-                                          :values    values
-                                          :errors    seq?}
-                           (-> (malapropism/with-schema schema)
-                               (malapropism/with-values-from-map values)
-                               (malapropism/verify! ::verbose))))))))
+        (is (thrown-match?
+             {:values    values
+              :errors    seq?
+              :schema    schema
+              :humanized {:foo vector?
+                          :bar vector?}}
+             (-> (malapropism/with-schema schema)
+                 (malapropism/with-values-from-map values)
+                 (malapropism/verify! ::verbose))))))))
