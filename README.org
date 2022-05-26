@@ -23,3 +23,7 @@ An [[https://github.com/grammarly/omniconf][omniconf]] inspired config library u
          :scm-rev "923345"})
       (malapropism/verify! ::verbose))
 #+END_SRC
+** License
+Copyright © 2022 Derek Passen
+
+Released under an MIT license.
