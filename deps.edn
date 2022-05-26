@@ -19,6 +19,8 @@
   {:extra-deps
    {io.github.cognitect-labs/test-runner
     {:git/sha "dfb30dd"
-     :git/tag "v0.5.1"}}
+     :git/tag "v0.5.1"}
+    nubank/matcher-combinators
+    {:mvn/version "3.5.0"}}
    :extra-paths ["test"]
    :exec-fn     cognitect.test-runner.api/test}}}

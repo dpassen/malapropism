@@ -62,7 +62,7 @@
            :schema    config-schema}
 
            verbose?
-           (assoc :explanation explanation
+           (assoc :errors (:errors explanation)
                   :values config-values))))))))
 
 (comment
