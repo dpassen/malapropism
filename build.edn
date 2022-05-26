@@ -1,2 +1,6 @@
 {:lib     org.passen/malapropism
- :version "0.1.{{git/commit-count}}"}
+ :version "0.1.{{git/commit-count}}"
+ :scm
+ {:connection          "scm:git:git://github.com/dpassen/malapropism.git"
+  :developerConnection "scm:git:ssh://git@github.com/dpassen/malapropism.git"
+  :url                 "https://github.com/dpassen/malapropism"}}
