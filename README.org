@@ -1,3 +1,25 @@
 # -*- coding: utf-8 -*-
-#+TITLE: malapropism
+* malapropism
 An [[https://github.com/grammarly/omniconf][omniconf]] inspired config library using [[https://github.com/metosin/malli][malli]]
+** Usage
+#+BEGIN_SRC clojure
+  (require '[org.passen.malapropism.core :as malapropism])
+
+  (def config-schema
+    [:map
+     [:env-key
+      {:optional true
+       :title    "environment key"}
+      :keyword]
+     [:scm-rev
+      {:optional true
+       :title    "scm revision"}
+      :string]])
+
+  (-> (malapropism/with-schema config-schema)
+      (malapropism/with-values-from-env)
+      (malapropism/with-values-from-map
+        {:env-key :dev
+         :scm-rev "923345"})
+      (malapropism/verify! ::verbose))
+#+END_SRC
