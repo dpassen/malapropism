@@ -9,7 +9,13 @@
   metosin/malli
   {:mvn/version "0.8.4"}}
  :aliases
- {:test
+ {:build
+  {:deps
+   {io.github.liquidz/build.edn
+    {:git/tag "0.2.63"
+     :git/sha "f4e571d"}}
+   :ns-default build-edn.main}
+  :test
   {:extra-deps
    {io.github.cognitect-labs/test-runner
     {:git/sha "dfb30dd"

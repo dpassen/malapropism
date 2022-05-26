@@ -1,0 +1,2 @@
+{:lib     org.passen/malapropism
+ :version "0.1.{{git/commit-count}}"}
