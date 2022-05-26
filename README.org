@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 * malapropism
 An [[https://github.com/grammarly/omniconf][omniconf]] inspired config library using [[https://github.com/metosin/malli][malli]]
+** Latest version
+malapropism is deployed to [[https://clojars.org][Clojars]]
+
+[[https://clojars.org/org.passen/malapropism][https://img.shields.io/clojars/v/org.passen/malapropism.svg]]
 ** Usage
 #+BEGIN_SRC clojure
   (require '[org.passen.malapropism.core :as malapropism])
