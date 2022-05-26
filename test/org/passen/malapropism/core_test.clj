@@ -7,13 +7,21 @@
 (deftest validate
   (let [schema [:map
                 [:foo :int]
-                [:bar :string]]]
+                [:bar :keyword]]]
     (testing "acceptable values are returned"
       (let [values {:foo 12
-                    :bar "eggs"}]
+                    :bar :eggs}]
         (is (= values (-> (malapropism/with-schema schema)
                           (malapropism/with-values-from-map values)
                           (malapropism/verify!))))))
+    (testing "acceptable values may start as strings"
+      (let [values {:foo "12"
+                    :bar "spam"}]
+        (is (= {:foo 12
+                :bar :spam}
+               (-> (malapropism/with-schema schema)
+                   (malapropism/with-values-from-map values)
+                   (malapropism/verify!))))))
     (testing "an exception is thrown with unacceptable values"
       (let [values {:foo 23.4
                     :bar [\e \g \g \s]}]

@@ -5,7 +5,8 @@
    [clojure.java.io :as io]
    [clojure.tools.logging :as log]
    [malli.core :as m]
-   [malli.error :as me])
+   [malli.error :as me]
+   [malli.transform :as mt])
   (:import
    (java.io PushbackReader)))
 
@@ -51,37 +52,18 @@
   ([config]
    (verify! config nil))
   ([[config-schema config-values] verbose?]
-   (if (m/validate config-schema config-values)
-     config-values
-     (let [explanation (m/explain config-schema config-values)]
-       (throw
-        (ex-info
-         "Config values do not match schema!"
-         (cond->
-          {:humanized (me/humanize explanation)
-           :schema    config-schema}
+   (let [transform          (m/decoder config-schema (mt/string-transformer))
+         transformed-values (transform config-values)]
+     (if (m/validate config-schema transformed-values)
+       transformed-values
+       (let [explanation (m/explain config-schema transformed-values)]
+         (throw
+          (ex-info
+           "Config values do not match schema!"
+           (cond->
+               {:humanized (me/humanize explanation)
+                :schema    config-schema}
 
-           verbose?
-           (assoc :errors (:errors explanation)
-                  :values config-values))))))))
-
-(comment
-  (def config-schema
-    [:map
-     [:env-key
-      {:optional true
-       :title    "environment key"}
-      :keyword]
-     [:scm-rev
-      {:optional true
-       :title    "scm revision"}
-      :string]])
-
-  (-> (with-schema config-schema)
-      (with-values-from-env)
-      (with-values-from-map
-        {:env-key :dev
-         :scm-rev "923345"})
-      (verify! ::verbose))
-
-  ,)
+             verbose?
+             (assoc :errors (:errors explanation)
+                    :values config-values)))))))))
