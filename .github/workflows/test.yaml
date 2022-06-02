@@ -16,7 +16,7 @@ jobs:
       - name: Install Clojure CLI Tools
         uses: DeLaGuardo/setup-clojure@5.1
         with:
-          cli: 1.11.1.1113
+          cli: latest
 
       - name: Install just Task Runner
         uses: extractions/setup-just@v1
