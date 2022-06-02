@@ -5,7 +5,7 @@ test:
     @clojure -X:test
 
 lint:
-    @clj-kondo --parallel --lint src test
+    @clj-kondo --parallel --lint src test deps.edn build.edn
 
 install:
     @clojure -T:build install
