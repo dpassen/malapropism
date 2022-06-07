@@ -18,6 +18,17 @@ jobs:
         with:
           cli: latest
 
+      - name: Cache local Maven repository
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: ~/.m2
+          key: clojure-m2-${{ hashFiles('deps.edn') }}
+
+      - name: Prep library
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: clojure -P
+
       - name: Install just Task Runner
         uses: extractions/setup-just@v1
 
