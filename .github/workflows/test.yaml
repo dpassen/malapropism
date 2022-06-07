@@ -27,7 +27,7 @@ jobs:
 
       - name: Prep library
         if: steps.cache.outputs.cache-hit != 'true'
-        run: clojure -P
+        run: clojure -P -X:test
 
       - name: Install just Task Runner
         uses: extractions/setup-just@v1
