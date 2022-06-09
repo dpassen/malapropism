@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 * malapropism
+[[file:.github/workflows/test.yaml][https://github.com/dpassen/malapropism/actions/workflows/test.yaml/badge.svg]]
+[[https://clojars.org/org.passen/malapropism][https://img.shields.io/clojars/dt/org.passen/malapropism.svg?color=opal]]
+
 An [[https://github.com/grammarly/omniconf][omniconf]] inspired config library using [[https://github.com/metosin/malli][malli]]
 ** Latest version
 malapropism is deployed to [[https://clojars.org][Clojars]]
