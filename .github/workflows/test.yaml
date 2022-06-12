@@ -18,11 +18,15 @@ jobs:
         with:
           cli: latest
 
-      - name: Cache local Maven repository
+      - name: Cache dependencies
         uses: actions/cache@v3
         id: cache
         with:
-          path: ~/.m2
+          path: |
+            ~/.m2/repository
+            ~/.gitlibs
+            ~/.clojure
+            ~/.cpcache
           key: clojure-m2-${{ hashFiles('deps.edn') }}
 
       - name: Prep library
