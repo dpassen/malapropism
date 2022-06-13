@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 * malapropism
 [[file:.github/workflows/test.yaml][https://github.com/dpassen/malapropism/actions/workflows/test.yaml/badge.svg]]
+[[file:.github/workflows/lint.yaml][https://github.com/dpassen/malapropism/actions/workflows/lint.yaml/badge.svg]]
 [[https://clojars.org/org.passen/malapropism][https://img.shields.io/clojars/dt/org.passen/malapropism.svg?color=opal]]
 
 An [[https://github.com/grammarly/omniconf][omniconf]] inspired config library using [[https://github.com/metosin/malli][malli]]
