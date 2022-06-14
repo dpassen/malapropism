@@ -1,6 +1,7 @@
 (ns org.passen.malapropism.core-test
   (:require
    [clojure.test :refer [deftest is testing]]
+   [matcher-combinators.matchers :as matchers]
    [matcher-combinators.test]
    [org.passen.malapropism.core :as malapropism]))
 
@@ -26,10 +27,12 @@
       (let [values {:foo 23.4
                     :bar [\e \g \g \s]}]
         (is (thrown-match?
-             {:schema schema
-              :humanized
-              {:foo vector?
-               :bar vector?}}
+             (matchers/match-with
+              [map? matchers/equals]
+              {:schema schema
+               :humanized
+               {:foo vector?
+                :bar vector?}})
              (-> (malapropism/with-schema schema)
                  (malapropism/with-values-from-map values)
                  (malapropism/verify!))))))
