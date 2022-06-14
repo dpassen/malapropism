@@ -15,6 +15,12 @@
     {:git/tag "0.3.90"
      :git/sha "e3a3e31"}}
    :ns-default build-edn.main}
+  :check
+  {:extra-deps
+   {io.github.athos/clj-check
+    {:git/tag "0.1.0"
+     :git/sha "0ca84df"}}
+   :main-opts ["-m" "clj-check.check"]}
   :test
   {:extra-deps
    {io.github.cognitect-labs/test-runner

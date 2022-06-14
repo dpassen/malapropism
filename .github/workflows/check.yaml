@@ -1,7 +1,7 @@
-name: Test
+name: Check
 on: [push]
 jobs:
-  test:
+  check:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -36,5 +36,5 @@ jobs:
       - name: Install just Task Runner
         uses: extractions/setup-just@v1
 
-      - name: Run Unit Tests
-        run: just test
+      - name: Run Reflection Checker
+        run: just check
