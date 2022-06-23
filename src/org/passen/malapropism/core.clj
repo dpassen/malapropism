@@ -44,9 +44,7 @@
   (log/info "Populating from env")
   (with-values-from-map
     config
-    (-> (System/getenv)
-        (into {})
-        (update-keys csk/->kebab-case-keyword))))
+    (update-keys (System/getenv) csk/->kebab-case-keyword)))
 
 (defn verify!
   ([config]
