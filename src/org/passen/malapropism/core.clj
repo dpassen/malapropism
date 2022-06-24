@@ -6,19 +6,10 @@
    [clojure.tools.logging :as log]
    [malli.core :as m]
    [malli.error :as me]
-   [malli.transform :as mt])
+   [malli.transform :as mt]
+   [malli.util :as mu])
   (:import
    (java.io PushbackReader)))
-
-(defn- schema-keys
-  [config-schema]
-  (m/walk
-   config-schema
-   (fn [schema _ children _options]
-     (let [children (if (m/entries schema)
-                      (filter last children)
-                      children)]
-       (map first children)))))
 
 (defn with-schema
   [config-schema]
@@ -26,7 +17,7 @@
 
 (defn with-values-from-map
   [[config-schema config-values] m]
-  (let [values (select-keys m (schema-keys config-schema))]
+  (let [values (select-keys m (mu/keys config-schema))]
     (log/infof "Populating, %d values" (count values))
     [config-schema (merge config-values values)]))
 
