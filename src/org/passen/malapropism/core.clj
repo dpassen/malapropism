@@ -38,21 +38,19 @@
     (update-keys (System/getenv) csk/->kebab-case-keyword)))
 
 (defn verify!
-  ([config]
-   (verify! config nil))
-  ([[config-schema config-values] verbose?]
-   (let [transform          (m/decoder config-schema (mt/string-transformer))
-         transformed-values (transform config-values)]
-     (if (m/validate config-schema transformed-values)
-       transformed-values
-       (let [explanation (m/explain config-schema transformed-values)]
-         (throw
-          (ex-info
-           "Config values do not match schema!"
-           (cond->
-               {:humanized (me/humanize explanation)
-                :schema    config-schema}
+  [[config-schema config-values] & {:keys [verbose?]}]
+  (let [transform          (m/decoder config-schema (mt/string-transformer))
+        transformed-values (transform config-values)]
+    (if (m/validate config-schema transformed-values)
+      transformed-values
+      (let [explanation (m/explain config-schema transformed-values)]
+        (throw
+         (ex-info
+          "Config values do not match schema!"
+          (cond->
+              {:humanized (me/humanize explanation)
+               :schema    config-schema}
 
-             verbose?
-             (assoc :errors (:errors explanation)
-                    :values config-values)))))))))
+            verbose?
+            (assoc :errors (:errors explanation)
+                   :values config-values))))))))

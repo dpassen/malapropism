@@ -30,7 +30,7 @@ malapropism is deployed to [[https://clojars.org][Clojars]]
       (malapropism/with-values-from-map
         {:env-key :dev
          :scm-rev "923345"})
-      (malapropism/verify! ::verbose))
+      (malapropism/verify! :verbose? true))
 #+END_SRC
 ** License
 Copyright © 2022 Derek Passen

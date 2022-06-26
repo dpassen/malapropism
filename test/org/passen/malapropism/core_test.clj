@@ -47,4 +47,4 @@
                           :bar vector?}}
              (-> (malapropism/with-schema schema)
                  (malapropism/with-values-from-map values)
-                 (malapropism/verify! ::verbose))))))))
+                 (malapropism/verify! :verbose? true))))))))
