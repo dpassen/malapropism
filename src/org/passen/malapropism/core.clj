@@ -39,8 +39,7 @@
 
 (defn verify!
   [[config-schema config-values] & {:keys [verbose?]}]
-  (let [transform          (m/decoder config-schema (mt/string-transformer))
-        transformed-values (transform config-values)]
+  (let [transformed-values (m/decode config-schema config-values (mt/string-transformer))]
     (if (m/validate config-schema transformed-values)
       transformed-values
       (let [explanation (m/explain config-schema transformed-values)]
