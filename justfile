@@ -4,6 +4,9 @@ default:
 test:
     @clojure -X:test
 
+watch-test:
+    @clojure -X:test:watcher
+
 lint:
     @rg -tclojure -tedn --files | xargs clj-kondo --parallel --lint
 
