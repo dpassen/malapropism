@@ -1,50 +1,83 @@
 (ns org.passen.malapropism.core-test
   (:require
+   [clojure.java.io :as io]
    [clojure.test :refer [deftest is testing]]
    [matcher-combinators.matchers :as matchers]
    [matcher-combinators.test]
    [org.passen.malapropism.core :as malapropism]))
 
+(def ^:private schema
+  [:map
+   [:foo-bar :int]
+   [:baz :keyword]])
+
+(deftest with-values-from-map
+  (testing "keys not present in schema are omitted"
+    (let [values {:foo-bar 12
+                  :baz     :eggs
+                  :bat     ["spam"]}]
+      (is (= {:foo-bar 12
+              :baz     :eggs}
+             (-> (malapropism/with-schema schema)
+                 (malapropism/with-values-from-map values)
+                 (malapropism/verify!)))))))
+
+(deftest with-values-from-file
+  (testing "can read edn from the classpath"
+    (is (= {:foo-bar 23
+            :baz     :yep}
+           (-> (malapropism/with-schema schema)
+               (malapropism/with-values-from-file (io/resource "values.edn"))
+               (malapropism/verify!))))))
+
+(deftest with-values-from-env
+  (with-redefs [malapropism/environment-variables (constantly
+                                                   {"FOO_BAR" "12"
+                                                    "BAZ"     "bat"})]
+    (is (= {:foo-bar 12
+            :baz     :bat}
+           (-> (malapropism/with-schema schema)
+               (malapropism/with-values-from-env)
+               (malapropism/verify!))))))
+
 (deftest validate
-  (let [schema [:map
-                [:foo :int]
-                [:bar :keyword]]]
-    (testing "acceptable values are returned"
-      (let [values {:foo 12
-                    :bar :eggs}]
-        (is (= values (-> (malapropism/with-schema schema)
-                          (malapropism/with-values-from-map values)
-                          (malapropism/verify!))))))
-    (testing "acceptable values may start as strings"
-      (let [values {:foo "12"
-                    :bar "spam"}]
-        (is (= {:foo 12
-                :bar :spam}
-               (-> (malapropism/with-schema schema)
-                   (malapropism/with-values-from-map values)
-                   (malapropism/verify!))))))
-    (testing "an exception is thrown with unacceptable values"
-      (let [values {:foo 23.4
-                    :bar [\e \g \g \s]}]
-        (is (thrown-match?
-             (matchers/match-with
-              [map? matchers/equals]
-              {:schema schema
-               :humanized
-               {:foo vector?
-                :bar vector?}})
+  (testing "acceptable values are returned"
+    (let [values {:foo-bar 12
+                  :baz     :eggs}]
+      (is (= values (-> (malapropism/with-schema schema)
+                        (malapropism/with-values-from-map values)
+                        (malapropism/verify!))))))
+  (testing "acceptable values may start as strings"
+    (let [values {:foo-bar "12"
+                  :baz     "spam"}]
+      (is (= {:foo-bar 12
+              :baz     :spam}
              (-> (malapropism/with-schema schema)
                  (malapropism/with-values-from-map values)
                  (malapropism/verify!))))))
-    (testing "verbose verify includes more data"
-      (let [values {:foo 23.4
-                    :bar [\e \g \g \s]}]
-        (is (thrown-match?
-             {:values    values
-              :errors    seq?
-              :schema    schema
-              :humanized {:foo vector?
-                          :bar vector?}}
-             (-> (malapropism/with-schema schema)
-                 (malapropism/with-values-from-map values)
-                 (malapropism/verify! :verbose? true))))))))
+  (testing "an exception is thrown with unacceptable values"
+    (let [values {:foo-bar 23.4
+                  :baz     [\e \g \g \s]}]
+      (is (thrown-match?
+           (matchers/match-with
+            [map? matchers/equals]
+            {:schema schema
+             :humanized
+             {:foo-bar vector?
+              :baz     vector?}})
+           (-> (malapropism/with-schema schema)
+               (malapropism/with-values-from-map values)
+               (malapropism/verify!))))))
+  (testing "verbose verify includes more data"
+    (let [values {:foo-bar 23.4
+                  :baz     [\e \g \g \s]}]
+      (is (thrown-match?
+           {:values values
+            :errors seq?
+            :schema schema
+            :humanized
+            {:foo-bar vector?
+             :baz     vector?}}
+           (-> (malapropism/with-schema schema)
+               (malapropism/with-values-from-map values)
+               (malapropism/verify! :verbose? true)))))))

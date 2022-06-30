@@ -29,7 +29,7 @@
     {:mvn/version "3.5.0"}
     org.slf4j/slf4j-nop
     {:mvn/version "1.7.36"}}
-   :extra-paths ["test"]
+   :extra-paths ["test" "test-resources"]
    :exec-fn     kaocha.runner/exec-fn}
   :watcher
   {:exec-args

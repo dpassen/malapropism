@@ -30,12 +30,16 @@
         (PushbackReader.)
         edn/read)))
 
+(defn- environment-variables
+  []
+  (System/getenv))
+
 (defn with-values-from-env
   [config]
   (log/info "Populating from env")
   (with-values-from-map
     config
-    (update-keys (System/getenv) csk/->kebab-case-keyword)))
+    (update-keys (environment-variables) csk/->kebab-case-keyword)))
 
 (defn verify!
   [[config-schema config-values] & {:keys [verbose?]}]
