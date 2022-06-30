@@ -31,14 +31,15 @@
                (malapropism/verify!))))))
 
 (deftest with-values-from-env
-  (with-redefs [malapropism/environment-variables (constantly
-                                                   {"FOO_BAR" "12"
-                                                    "BAZ"     "bat"})]
-    (is (= {:foo-bar 12
-            :baz     :bat}
-           (-> (malapropism/with-schema schema)
-               (malapropism/with-values-from-env)
-               (malapropism/verify!))))))
+  (testing "can read from env and turn ENV_VAR looking keys into :env-var"
+    (with-redefs [malapropism/environment-variables
+                  (constantly {"FOO_BAR" "12"
+                               "BAZ"     "bat"})]
+      (is (= {:foo-bar 12
+              :baz     :bat}
+             (-> (malapropism/with-schema schema)
+                 (malapropism/with-values-from-env)
+                 (malapropism/verify!)))))))
 
 (deftest validate
   (testing "acceptable values are returned"
