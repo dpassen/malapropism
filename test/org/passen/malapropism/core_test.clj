@@ -56,6 +56,18 @@
              (-> (malapropism/with-schema schema)
                  (malapropism/with-values-from-map values)
                  (malapropism/verify!))))))
+  (testing "acceptable values may come from any source and be overridden"
+    (let [values {:foo-bar "12"
+                  :baz     "spam"}]
+      (with-redefs [malapropism/environment-variables
+                    (constantly {"FOO_BAR" "16"})]
+        (is (= {:foo-bar 16
+                :baz     :yep}
+               (-> (malapropism/with-schema schema)
+                   (malapropism/with-values-from-map values)
+                   (malapropism/with-values-from-file (io/resource "values.edn"))
+                   (malapropism/with-values-from-env)
+                   (malapropism/verify!)))))))
   (testing "an exception is thrown with unacceptable values"
     (let [values {:foo-bar 23.4
                   :baz     [\e \g \g \s]}]
