@@ -7,4 +7,4 @@ pom.xml.asc
 *.class
 /.nrepl-port
 .cpcache/
-.clj-kondo/.cache
+.cache
