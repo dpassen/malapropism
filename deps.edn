@@ -24,7 +24,7 @@
   :test
   {:extra-deps
    {lambdaisland/kaocha
-    {:mvn/version "1.68.1059"}
+    {:mvn/version "1.69.1069"}
     nubank/matcher-combinators
     {:mvn/version "3.5.0"}
     org.slf4j/slf4j-nop
