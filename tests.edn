@@ -1,10 +1,5 @@
 #kaocha/v1
-{:tests
- [{:id           :unit
-   :source-paths ["src"]
-   :test-paths   ["test"]
-   :ns-patterns  ["-test$"]}]
- :capture-output? true
+{:capture-output? true
  :color?          true
  :randomize?      true
  :reporter        kaocha.report/documentation}
