@@ -1,5 +1,2 @@
 #kaocha/v1
-{:capture-output? true
- :color?          true
- :randomize?      true
- :reporter        kaocha.report/documentation}
+{:reporter kaocha.report/documentation}
