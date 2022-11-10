@@ -26,7 +26,7 @@
    {lambdaisland/kaocha
     {:mvn/version "1.71.1119"}
     nubank/matcher-combinators
-    {:mvn/version "3.5.1"}
+    {:mvn/version "3.6.0"}
     org.slf4j/slf4j-nop
     {:mvn/version "2.0.3"}}
    :extra-paths ["test" "test-resources"]
