@@ -6,8 +6,7 @@
    [clojure.tools.logging :as log]
    [malli.core :as m]
    [malli.error :as me]
-   [malli.transform :as mt]
-   [malli.util :as mu])
+   [malli.transform :as mt])
   (:import
    (java.io PushbackReader)))
 
@@ -17,9 +16,8 @@
 
 (defn with-values-from-map
   [[config-schema config-values] m]
-  (let [values (select-keys m (mu/keys config-schema))]
-    (log/infof "Populating, %d values" (count values))
-    [config-schema (merge config-values values)]))
+  (log/infof "Populating, %d values" (count m))
+  [config-schema (merge config-values m)])
 
 (defn with-values-from-file
   [config file]
@@ -43,7 +41,11 @@
 
 (defn verify!
   [[config-schema config-values] & {:keys [verbose?]}]
-  (let [transformed-values (m/decode config-schema config-values (mt/string-transformer))]
+  (let [transformer        (mt/transformer
+                            mt/strip-extra-keys-transformer
+                            mt/default-value-transformer
+                            mt/string-transformer)
+        transformed-values (m/decode config-schema config-values transformer)]
     (if (m/validate config-schema transformed-values)
       transformed-values
       (let [explanation (m/explain config-schema transformed-values)]

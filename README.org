@@ -34,19 +34,22 @@ With malapropism,
 
   (def config-schema
     [:map
-     [:env-key
-      {:title "environment key"}
-      :keyword]
-     [:scm-rev
-      {:optional true
-       :title    "scm revision"}
+     [:env-key :keyword]
+     [:scm-rev :string]
+     [:port
+      {:default 3000}
+      :int]
+     [:prefix
+      {:default "/api"}
       :string]])
 
   (-> (malapropism/with-schema config-schema)
       (malapropism/with-values-from-env)
       (malapropism/with-values-from-map
         {:env-key :dev
-         :scm-rev "923345"})
+         :scm-rev "923345"
+         :port    8080
+         :prefix  "/web"})
       (malapropism/verify! :verbose? true))
 #+END_SRC
 ** License

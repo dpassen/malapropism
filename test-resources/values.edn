@@ -1,2 +1,4 @@
-{:foo-bar 23
- :baz     :yep}
+{:env-key :qa
+ :scm-rev "ffffff"
+ :port    8443
+ :prefix  "/app"}
