@@ -64,17 +64,16 @@
                  (malapropism/with-values-from-map values)
                  (malapropism/verify!))))))
   (testing "acceptable values may come from any source and be overridden"
-    (let [values {:scm-rev "123456"
-                  :prefix  "/myapp"}]
+    (let [values {:prefix "/myapp"}]
       (with-redefs [malapropism/environment-variables
                     (constantly {"ENV_KEY" "qa2"})]
         (is (= {:env-key :qa2
                 :scm-rev "ffffff"
                 :port    8443
-                :prefix  "/app"}
+                :prefix  "/myapp"}
                (-> (malapropism/with-schema schema)
-                   (malapropism/with-values-from-map values)
                    (malapropism/with-values-from-file (io/resource "values.edn"))
+                   (malapropism/with-values-from-map values)
                    (malapropism/with-values-from-env)
                    (malapropism/verify!)))))))
   (testing "keys not present in schema are omitted"
@@ -95,8 +94,8 @@
                   :scm-rev "zyx987"}]
       (is (= {:env-key :prod
               :scm-rev "zyx987"
-              :port 3000
-              :prefix "/api"}
+              :port    3000
+              :prefix  "/api"}
              (-> (malapropism/with-schema schema)
                  (malapropism/with-values-from-map values)
                  (malapropism/verify!))))))
