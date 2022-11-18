@@ -28,7 +28,7 @@
     nubank/matcher-combinators
     {:mvn/version "3.6.0"}
     org.slf4j/slf4j-nop
-    {:mvn/version "2.0.3"}}
+    {:mvn/version "2.0.4"}}
    :extra-paths ["test" "test-resources"]
    :exec-fn     kaocha.runner/exec-fn}
   :watcher
