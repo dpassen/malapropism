@@ -4,15 +4,15 @@
    [clojure.test :refer [deftest is testing]]
    [matcher-combinators.matchers :as matchers]
    [matcher-combinators.test]
-   [org.passen.malapropism.core :as malapropism]))
+   [org.passen.malapropism.core :as malapropism]
+   [org.passen.malapropism.environment-variables :as environment-variables]
+   [org.passen.malapropism.system-properties :as system-properties]))
 
 (def ^:private schema
   [:map
    [:env-key :keyword]
    [:scm-rev :string]
-   [:port
-    {:default 3000}
-    :int]
+   [:port :int]
    [:prefix
     {:default "/api"}
     :string]])
@@ -29,7 +29,7 @@
 
 (deftest with-values-from-env
   (testing "can read from env and turn ENV_VAR looking keys into :env-var"
-    (with-redefs [malapropism/environment-variables
+    (with-redefs [environment-variables/environment-variables
                   (constantly {"ENV_KEY" "local"
                                "SCM_REV" "123456"
                                "PORT"    "5000"
@@ -40,6 +40,21 @@
               :prefix  "/v2"}
              (-> (malapropism/with-schema schema)
                  (malapropism/with-values-from-env)
+                 (malapropism/verify!)))))))
+
+(deftest with-values-from-system
+  (testing "can read from system and turn system.PropertyName looking keys into system-property-name"
+    (with-redefs [system-properties/system-properties
+                  (constantly {"env.key" "remote"
+                               "scmRev"  "aeiouy"
+                               "port"    "3600"
+                               "prefix"  "/main"})]
+      (is (= {:env-key :remote
+              :scm-rev "aeiouy"
+              :port    3600
+              :prefix  "/main"}
+             (-> (malapropism/with-schema schema)
+                 (malapropism/with-values-from-system)
                  (malapropism/verify!)))))))
 
 (deftest validate
@@ -65,16 +80,19 @@
                  (malapropism/verify!))))))
   (testing "acceptable values may come from any source and be overridden"
     (let [values {:prefix "/myapp"}]
-      (with-redefs [malapropism/environment-variables
-                    (constantly {"ENV_KEY" "qa2"})]
+      (with-redefs [environment-variables/environment-variables
+                    (constantly {"ENV_KEY" "qa2"})
+                    system-properties/system-properties
+                    (constantly {"scm.Rev" "aaaaaa"})]
         (is (= {:env-key :qa2
-                :scm-rev "ffffff"
+                :scm-rev "aaaaaa"
                 :port    8443
                 :prefix  "/myapp"}
                (-> (malapropism/with-schema schema)
                    (malapropism/with-values-from-file (io/resource "values.edn"))
                    (malapropism/with-values-from-map values)
                    (malapropism/with-values-from-env)
+                   (malapropism/with-values-from-system)
                    (malapropism/verify!)))))))
   (testing "keys not present in schema are omitted"
     (let [values {:env-key :dev
@@ -91,7 +109,8 @@
                  (malapropism/verify!))))))
   (testing "keys with default values may be omitted"
     (let [values {:env-key :prod
-                  :scm-rev "zyx987"}]
+                  :scm-rev "zyx987"
+                  :port    3000}]
       (is (= {:env-key :prod
               :scm-rev "zyx987"
               :port    3000
@@ -101,7 +120,8 @@
                  (malapropism/verify!))))))
   (testing "an exception is thrown with unacceptable values"
     (let [values {:env-key true
-                  :scm-rev "zyx987"}]
+                  :scm-rev "zyx987"
+                  :port    3500}]
       (is (thrown-match?
            (matchers/match-with
             [map? matchers/equals]
@@ -113,7 +133,8 @@
                (malapropism/verify!))))))
   (testing "verbose verify includes more data"
     (let [values {:env-key false
-                  :scm-rev "zyx987"}]
+                  :scm-rev "zyx987"
+                  :port    4242}]
       (is (thrown-match?
            {:values values
             :errors seq?

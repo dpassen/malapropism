@@ -1,12 +1,13 @@
 (ns org.passen.malapropism.core
   (:require
-   [camel-snake-kebab.core :as csk]
    [clojure.edn :as edn]
    [clojure.java.io :as io]
    [clojure.tools.logging :as log]
    [malli.core :as m]
    [malli.error :as me]
-   [malli.transform :as mt])
+   [malli.transform :as mt]
+   [org.passen.malapropism.environment-variables :as environment-variables]
+   [org.passen.malapropism.system-properties :as system-properties])
   (:import
    (java.io PushbackReader)))
 
@@ -28,16 +29,23 @@
         (PushbackReader.)
         edn/read)))
 
-(defn- environment-variables
-  []
-  (System/getenv))
-
 (defn with-values-from-env
   [config]
   (log/info "Populating from env")
   (with-values-from-map
     config
-    (update-keys (environment-variables) csk/->kebab-case-keyword)))
+    (update-keys
+     (environment-variables/environment-variables)
+     environment-variables/parse-key)))
+
+(defn with-values-from-system
+  [config]
+  (log/info "Populating from system")
+  (with-values-from-map
+    config
+    (update-keys
+     (system-properties/system-properties)
+     system-properties/parse-key)))
 
 (defn verify!
   [[config-schema config-values] & {:keys [verbose?]}]

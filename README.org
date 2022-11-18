@@ -36,15 +36,14 @@ With malapropism,
     [:map
      [:env-key :keyword]
      [:scm-rev :string]
-     [:port
-      {:default 3000}
-      :int]
+     [:port :int]
      [:prefix
       {:default "/api"}
       :string]])
 
   (-> (malapropism/with-schema config-schema)
       (malapropism/with-values-from-env)
+      (malapropism/with-values-from-system)
       (malapropism/with-values-from-map
         {:env-key :dev
          :scm-rev "923345"
