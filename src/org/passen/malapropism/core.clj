@@ -13,7 +13,7 @@
 
 (defn with-schema
   [config-schema]
-  [config-schema nil])
+  [config-schema])
 
 (defn with-values-from-map
   [[config-schema config-values] m]
