@@ -1,4 +1,5 @@
 (ns org.passen.malapropism.environment-variables
+  "Helper functions to deal with process environment variables."
   (:require
    [camel-snake-kebab.core :as csk]))
 

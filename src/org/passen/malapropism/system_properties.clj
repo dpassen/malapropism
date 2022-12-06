@@ -1,4 +1,5 @@
 (ns org.passen.malapropism.system-properties
+  "Helper functions to deal with JVM system properties.'"
   (:require
    [camel-snake-kebab.core :as csk]
    [clojure.string :as str]))
