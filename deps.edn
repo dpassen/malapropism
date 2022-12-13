@@ -26,9 +26,9 @@
    {lambdaisland/kaocha
     {:mvn/version "1.71.1119"}
     nubank/matcher-combinators
-    {:mvn/version "3.7.1"}
+    {:mvn/version "3.7.2"}
     org.slf4j/slf4j-nop
-    {:mvn/version "2.0.5"}}
+    {:mvn/version "2.0.6"}}
    :extra-paths ["test" "test-resources"]
    :exec-fn     kaocha.runner/exec-fn}
   :watcher
