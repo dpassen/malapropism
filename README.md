@@ -23,8 +23,8 @@ Enter [malli](https://github.com/metosin/malli), a library that I've really grow
 Configuration should be flexible. Most solutions in this space assume too much.
 
 With malapropism,
-- Stick it in an atom? Yeah!
-- Put it in a delay? Okay
+- Stick it in an [atom](https://clojuredocs.org/clojure.core/atom)? Yeah!
+- Put it in a [delay](https://clojuredocs.org/clojure.core/delay)? Okay
 - Keep it behind [core.cache](https://github.com/clojure/core.cache) or [core.memoize](https://github.com/clojure/core.memoize)? Sure, why not?
 - Deliver it to a promise? I could see it
 - Re-compute it each and every time? I wouldn’t
