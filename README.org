@@ -52,6 +52,6 @@ With malapropism,
       (malapropism/verify! :verbose? true))
 #+END_SRC
 ** License
-Copyright © 2022 Derek Passen
+Copyright © 2022-2023 Derek Passen
 
 Released under an MIT license.
