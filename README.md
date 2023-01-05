@@ -55,6 +55,12 @@ With malapropism,
     (malapropism/verify! :verbose? true))
 ```
 
+## Consumers
+
+These companies use malapropism. Feel free to add your company to the list.
+
+- [Splash Financial](https://www.splashfinancial.com/)
+
 ## License
 
 Copyright © 2022-2023 Derek Passen
