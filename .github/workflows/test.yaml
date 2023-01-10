@@ -37,8 +37,8 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: clojure -P -X:check:test
 
-      - name: Install just Task Runner
-        uses: extractions/setup-just@v1
+      - name: Install Task
+        uses: arduino/setup-task@v1
 
       - name: Run Unit Tests
-        run: just test
+        run: task test

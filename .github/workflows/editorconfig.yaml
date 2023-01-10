@@ -14,8 +14,8 @@ jobs:
       - name: Install editorconfig-checker
         uses: editorconfig-checker/action-editorconfig-checker@main
 
-      - name: Install just Task Runner
-        uses: extractions/setup-just@v1
+      - name: Install Task
+        uses: arduino/setup-task@v1
 
       - name: Run editorconfig-checker
-        run: just editorconfig
+        run: task editorconfig

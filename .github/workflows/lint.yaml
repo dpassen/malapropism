@@ -41,8 +41,8 @@ jobs:
       - name: Install ripgrep
         run: sudo apt-get install ripgrep
 
-      - name: Install just Task Runner
-        uses: extractions/setup-just@v1
+      - name: Install Task
+        uses: arduino/setup-task@v1
 
       - name: Run Linter
-        run: just lint
+        run: task lint

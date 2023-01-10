@@ -13,6 +13,3 @@ indent_style = space
 
 [*.md]
 trim_trailing_whitespace = false
-
-[justfile]
-indent_style = space
