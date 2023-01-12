@@ -10,6 +10,7 @@
    [org.passen.malapropism.environment-variables :as environment-variables]
    [org.passen.malapropism.system-properties :as system-properties])
   (:import
+   (clojure.lang ExceptionInfo)
    (java.io PushbackReader)))
 
 (defn with-schema
@@ -60,21 +61,21 @@
   throws an exception if not. verbose? flag controls
   whether the ex-data contains the original values."
   [[config-schema config-values] & {:keys [verbose?]}]
-  (let [transformer        (mt/transformer
-                            mt/strip-extra-keys-transformer
-                            mt/default-value-transformer
-                            mt/string-transformer)
-        transformed-values (m/decode config-schema config-values transformer)]
-    (if (m/validate config-schema transformed-values)
-      transformed-values
-      (let [explanation (m/explain config-schema transformed-values)]
-        (throw
-         (ex-info
-          "Config values do not match schema!"
-          (cond->
-              {:humanized (me/humanize explanation)
-               :schema    config-schema}
+  (let [transformer (mt/transformer
+                     mt/strip-extra-keys-transformer
+                     mt/default-value-transformer
+                     mt/string-transformer)]
+    (try
+      (m/coerce config-schema config-values transformer)
+      (catch ExceptionInfo e
+        (let [{{:keys [explain]} :data} (ex-data e)]
+          (throw
+           (ex-info
+            "Config values do not match schema!"
+            (cond->
+                {:humanized (me/humanize explain)
+                 :schema    config-schema}
 
-            verbose?
-            (assoc :errors (:errors explanation)
-                   :values config-values))))))))
+              verbose?
+              (assoc :errors (:errors explain)
+                     :values config-values)))))))))
