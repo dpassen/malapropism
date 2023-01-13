@@ -4,9 +4,8 @@ silent: true
 
 tasks:
   default:
-    desc: List all tasks
     cmds:
-      - task --list-all
+      - task --list
 
   test:
     desc: Run unit tests
