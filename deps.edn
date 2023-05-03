@@ -12,8 +12,8 @@
  {:build
   {:deps
    {io.github.liquidz/build.edn
-    {:git/tag "0.9.203"
-     :git/sha "b276908"}}
+    {:git/tag "0.9.216"
+     :git/sha "2f7d56e"}}
    :ns-default build-edn.main}
   :check
   {:extra-deps
