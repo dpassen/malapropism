@@ -1,9 +1,10 @@
 (ns org.passen.malapropism.core-test
   (:require
    [clojure.java.io :as io]
-   [clojure.test :refer [deftest is testing]]
+   [clojure.test :refer [deftest is]]
    [matcher-combinators.matchers :as matchers]
    [matcher-combinators.test]
+   [mockfn.clj-test :refer [providing testing]]
    [org.passen.malapropism.core :as malapropism]
    [org.passen.malapropism.environment-variables :as environment-variables]
    [org.passen.malapropism.system-properties :as system-properties]))
@@ -29,33 +30,35 @@
 
 (deftest with-values-from-env
   (testing "can read from env and turn ENV_VAR looking keys into :env-var"
-    (with-redefs [environment-variables/environment-variables
-                  (constantly {"ENV_KEY" "local"
-                               "SCM_REV" "123456"
-                               "PORT"    "5000"
-                               "PREFIX"  "/v2"})]
-      (is (= {:env-key :local
-              :scm-rev "123456"
-              :port    5000
-              :prefix  "/v2"}
-             (-> (malapropism/with-schema schema)
-                 (malapropism/with-values-from-env)
-                 (malapropism/verify!)))))))
+    (is (= {:env-key :local
+            :scm-rev "123456"
+            :port    5000
+            :prefix  "/v2"}
+           (-> (malapropism/with-schema schema)
+               (malapropism/with-values-from-env)
+               (malapropism/verify!))))
+    (providing
+     (environment-variables/environment-variables)
+     {"ENV_KEY" "local"
+      "SCM_REV" "123456"
+      "PORT"    "5000"
+      "PREFIX"  "/v2"})))
 
 (deftest with-values-from-system
   (testing "can read from system and turn system.PropertyName looking keys into system-property-name"
-    (with-redefs [system-properties/system-properties
-                  (constantly {"env.key" "remote"
-                               "scmRev"  "aeiouy"
-                               "port"    "3600"
-                               "prefix"  "/main"})]
-      (is (= {:env-key :remote
-              :scm-rev "aeiouy"
-              :port    3600
-              :prefix  "/main"}
-             (-> (malapropism/with-schema schema)
-                 (malapropism/with-values-from-system)
-                 (malapropism/verify!)))))))
+    (is (= {:env-key :remote
+            :scm-rev "aeiouy"
+            :port    3600
+            :prefix  "/main"}
+           (-> (malapropism/with-schema schema)
+               (malapropism/with-values-from-system)
+               (malapropism/verify!))))
+    (providing
+     (system-properties/system-properties)
+     {"env.key" "remote"
+      "scmRev"  "aeiouy"
+      "port"    "3600"
+      "prefix"  "/main"})))
 
 (deftest validate
   (testing "acceptable values are returned"
@@ -80,20 +83,21 @@
                  (malapropism/verify!))))))
   (testing "acceptable values may come from any source and be overridden"
     (let [values {:prefix "/myapp"}]
-      (with-redefs [environment-variables/environment-variables
-                    (constantly {"ENV_KEY" "qa2"})
-                    system-properties/system-properties
-                    (constantly {"scm.Rev" "aaaaaa"})]
-        (is (= {:env-key :qa2
-                :scm-rev "aaaaaa"
-                :port    8443
-                :prefix  "/myapp"}
-               (-> (malapropism/with-schema schema)
-                   (malapropism/with-values-from-file (io/resource "values.edn"))
-                   (malapropism/with-values-from-map values)
-                   (malapropism/with-values-from-env)
-                   (malapropism/with-values-from-system)
-                   (malapropism/verify!)))))))
+      (is (= {:env-key :qa2
+              :scm-rev "aaaaaa"
+              :port    8443
+              :prefix  "/myapp"}
+             (-> (malapropism/with-schema schema)
+                 (malapropism/with-values-from-file (io/resource "values.edn"))
+                 (malapropism/with-values-from-map values)
+                 (malapropism/with-values-from-env)
+                 (malapropism/with-values-from-system)
+                 (malapropism/verify!)))))
+    (providing
+     (environment-variables/environment-variables)
+     {"ENV_KEY" "qa2"}
+     (system-properties/system-properties)
+     {"scm.Rev" "aaaaaa"}))
   (testing "keys not present in schema are omitted"
     (let [values {:env-key :dev
                   :scm-rev "923345"
