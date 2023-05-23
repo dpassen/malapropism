@@ -21,6 +21,12 @@
     {:git/tag "0.1.0"
      :git/sha "0ca84df"}}
    :main-opts ["-m" "clj-check.check"]}
+  :splint
+  {:deps
+   {io.github.noahtheduke/splint
+    {:git/tag "v1.6.1"
+     :git/sha "d70343e"}}
+   :main-opts ["-m" "noahtheduke.splint"]}
   :test
   {:extra-deps
    {lambdaisland/kaocha

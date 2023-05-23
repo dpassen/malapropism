@@ -18,9 +18,20 @@ tasks:
       - clojure -X:test:watcher
 
   lint:
-    desc: Lint code using clj-kondo
+    desc: Lint source code
+    cmds:
+      - task: lint:kondo
+      - task: lint:splint
+
+  lint:kondo:
+    desc: Lint source code using clj-kondo
     cmds:
       - rg -tclojure -tedn --files | xargs clj-kondo --parallel --lint
+
+  lint:splint:
+    desc: Lint source code using splint
+    cmds:
+      - clojure -M:splint src test
 
   check:
     desc: Check for reflection using clj-check
