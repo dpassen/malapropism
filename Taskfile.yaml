@@ -50,5 +50,5 @@ tasks:
 
   publish:
     desc: Deploy to Clojars
-    cmd:
+    cmds:
       - clojure -T:build deploy
