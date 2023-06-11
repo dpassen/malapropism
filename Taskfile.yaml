@@ -4,18 +4,15 @@ silent: true
 
 tasks:
   default:
-    cmds:
-      - task --list
+    cmd: task --list
 
   test:
     desc: Run unit tests
-    cmds:
-      - clojure -X:test
+    cmd: clojure -X:test
 
   test:watch:
     desc: Watch source code and run tests accordingly
-    cmds:
-      - clojure -X:test:watcher
+    cmd: clojure -X:test:watcher
 
   lint:
     desc: Lint source code
@@ -25,30 +22,24 @@ tasks:
 
   lint:kondo:
     desc: Lint source code using clj-kondo
-    cmds:
-      - rg -tclojure -tedn --files | xargs clj-kondo --parallel --lint
+    cmd: rg -tclojure -tedn --files | xargs clj-kondo --parallel --lint
 
   lint:splint:
     desc: Lint source code using splint
-    cmds:
-      - clojure -M:splint src test
+    cmd: clojure -M:splint src test
 
   check:
     desc: Check for reflection using clj-check
-    cmds:
-      - clojure -M:check
+    cmd: clojure -M:check
 
   editorconfig:
     desc: Check for editorconfig violations using editorconfig-checker
-    cmds:
-      - git ls-files | xargs editorconfig-checker
+    cmd: git ls-files | xargs editorconfig-checker
 
   install:
     desc: Install locally
-    cmds:
-      - clojure -T:build install
+    cmd: clojure -T:build install
 
   publish:
     desc: Deploy to Clojars
-    cmds:
-      - clojure -T:build deploy
+    cmd: clojure -T:build deploy
