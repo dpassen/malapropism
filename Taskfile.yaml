@@ -34,7 +34,7 @@ tasks:
 
   editorconfig:
     desc: Check for editorconfig violations using editorconfig-checker
-    cmd: git ls-files | xargs editorconfig-checker
+    cmd: editorconfig-checker
 
   install:
     desc: Install locally
