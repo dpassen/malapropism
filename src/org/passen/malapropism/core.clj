@@ -72,8 +72,8 @@
          (ex-info
           "Config values do not match schema!"
           (cond->
-              {:humanized (me/humanize explanation)
-               :schema    config-schema}
+           {:humanized (me/humanize explanation)
+            :schema    config-schema}
 
             verbose?
             (assoc :errors (:errors explanation)
