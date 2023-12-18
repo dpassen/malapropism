@@ -23,6 +23,7 @@ Enter [malli](https://github.com/metosin/malli), a library that I've really grow
 Configuration should be flexible. Most solutions in this space assume too much.
 
 With malapropism,
+
 - Stick it in an [atom](https://clojuredocs.org/clojure.core/atom)? Yeah!
 - Put it in a [delay](https://clojuredocs.org/clojure.core/delay)? Okay
 - Keep it behind [core.cache](https://github.com/clojure/core.cache) or [core.memoize](https://github.com/clojure/core.memoize)? Sure, why not?
@@ -32,6 +33,7 @@ With malapropism,
 - Have more than one? No one's going to stop you
 
 ## Usage
+
 ```clojure
 (require '[org.passen.malapropism.core :as malapropism])
 
