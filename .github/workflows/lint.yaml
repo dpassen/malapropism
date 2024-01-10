@@ -18,7 +18,7 @@ jobs:
           java-version: 17
 
       - name: Install Clojure CLI Tools
-        uses: DeLaGuardo/setup-clojure@12.2
+        uses: DeLaGuardo/setup-clojure@12.3
         with:
           cli: latest
           clj-kondo: latest
