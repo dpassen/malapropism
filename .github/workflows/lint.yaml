@@ -42,7 +42,7 @@ jobs:
         run: sudo apt-get install ripgrep
 
       - name: Install Task
-        uses: arduino/setup-task@v1
+        uses: arduino/setup-task@v2
 
       - name: Run Linter
         run: task lint
