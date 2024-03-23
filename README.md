@@ -13,7 +13,7 @@ using [malli](https://github.com/metosin/malli)
 
 malapropism is deployed to [Clojars](https://clojars.org)
 
-![Clojars Project](https://img.shields.io/clojars/v/org.passen/malapropism.svg)
+[![Clojars Project](https://img.shields.io/clojars/v/org.passen/malapropism.svg)](https://clojars.org/org.passen/malapropism/)
 
 ## Rationale
 
