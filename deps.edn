@@ -30,7 +30,7 @@
   :test
   {:extra-deps
    {lambdaisland/kaocha
-    {:mvn/version "1.88.1376"}
+    {:mvn/version "1.89.1380"}
     nubank/matcher-combinators
     {:mvn/version "3.9.1"}
     nubank/mockfn
