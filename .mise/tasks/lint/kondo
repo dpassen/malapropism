@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# mise description="Lint source code using clj-kondo"
+
+set -o nounset
+set -o errexit
+set -o pipefail
+
+kondo () {
+    rg -tclojure -tedn --files | xargs clj-kondo --parallel --lint
+}
+
+kondo

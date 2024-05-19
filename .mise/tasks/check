@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# mise description="Check for reflection using clj-check"
+
+set -o nounset
+set -o errexit
+set -o pipefail
+
+check () {
+    clojure -M:check
+}
+
+check

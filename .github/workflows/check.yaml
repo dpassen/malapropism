@@ -37,8 +37,10 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: clojure -P -X:check:test
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
+      - name: Install Mise
+        uses: jdx/mise-action@v2
+        with:
+          experimental: true
 
       - name: Run Reflection Checker
-        run: task check
+        run: mise run check
