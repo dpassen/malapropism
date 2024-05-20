@@ -41,8 +41,10 @@ jobs:
       - name: Install ripgrep
         run: sudo apt-get install ripgrep
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
+      - name: Install Mise
+        uses: jdx/mise-action@v2
+        with:
+          experimental: true
 
       - name: Run Linter
-        run: task lint
+        run: mise run lint:all

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# mise description="Deploy to Clojars"
+
+set -o nounset
+set -o errexit
+set -o pipefail
+
+publish () {
+    clojure -T:build deploy
+}
+
+publish
