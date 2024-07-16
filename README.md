@@ -30,7 +30,8 @@ With malapropism,
 - Put it in a [delay](https://clojuredocs.org/clojure.core/delay)? Okay
 - Keep it behind [core.cache](https://github.com/clojure/core.cache) or
   [core.memoize](https://github.com/clojure/core.memoize)? Sure, why not?
-- Deliver it to a promise? I could see it
+- Deliver it to a [promise](https://clojuredocs.org/clojure.core/promise)?
+  I could see it
 - Re-compute it each and every time? I wouldn’t
 - Have a single configuration? Yeah, that makes sense
 - Have more than one? No one's going to stop you
