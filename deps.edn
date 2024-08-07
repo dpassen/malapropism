@@ -36,7 +36,7 @@
     nubank/mockfn
     {:mvn/version "0.7.0"}
     org.slf4j/slf4j-nop
-    {:mvn/version "2.0.13"}}
+    {:mvn/version "2.0.14"}}
    :extra-paths ["test" "test-resources"]
    :exec-fn     kaocha.runner/exec-fn}
   :watcher
