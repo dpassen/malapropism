@@ -31,7 +31,7 @@
   (with-values-from-map
     config
     (-> (io/reader file)
-        (PushbackReader.)
+        PushbackReader/new
         edn/read)))
 
 (defn with-values-from-env
