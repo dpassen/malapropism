@@ -7,7 +7,7 @@
   camel-snake-kebab/camel-snake-kebab
   {:mvn/version "0.4.3"}
   metosin/malli
-  {:mvn/version "0.16.3"}}
+  {:mvn/version "0.16.4"}}
  :aliases
  {:build
   {:deps
