@@ -12,17 +12,29 @@
   (:import
    (java.io PushbackReader)))
 
+(def ^:private transformer
+  (mt/transformer
+   mt/strip-extra-keys-transformer
+   mt/default-value-transformer
+   mt/string-transformer))
+
 (defn with-schema
   "Initializes malapropism with a malli schema."
-  [config-schema]
-  [config-schema])
+  [schema]
+  (let [decode   (m/decoder schema transformer)
+        explain  (m/explainer schema)
+        validate (m/validator schema)]
+    {::decode   decode
+     ::explain  explain
+     ::schema   schema
+     ::validate validate}))
 
 (defn with-values-from-map
   "Reads configuration values from a map. This is foundational;
   all other with-values-from-* functions call this one."
-  [[config-schema config-values] m]
+  [config m]
   (log/infof "Populating, %d values" (count m))
-  [config-schema (merge config-values m)])
+  (update config ::values merge m))
 
 (defn with-values-from-file
   "Reads configuration values from an edn file."
@@ -59,22 +71,18 @@
   Returns the coerced configuration data if valid,
   throws an exception if not. verbose? flag controls
   whether the ex-data contains the original values."
-  [[config-schema config-values] & {:keys [verbose?]}]
-  (let [transformer        (mt/transformer
-                            mt/strip-extra-keys-transformer
-                            mt/default-value-transformer
-                            mt/string-transformer)
-        transformed-values (m/decode config-schema config-values transformer)]
-    (if (m/validate config-schema transformed-values)
+  [{::keys [decode explain schema validate values]} & {:keys [verbose?]}]
+  (let [transformed-values (decode values)]
+    (if (validate transformed-values)
       transformed-values
-      (let [explanation (m/explain config-schema transformed-values)]
+      (let [explanation (explain transformed-values)]
         (throw
          (ex-info
           "Config values do not match schema!"
           (cond->
            {:humanized (me/humanize explanation)
-            :schema    config-schema}
+            :schema    schema}
 
             verbose?
             (assoc :errors (:errors explanation)
-                   :values config-values))))))))
+                   :values values))))))))
