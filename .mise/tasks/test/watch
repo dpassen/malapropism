@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# mise description="Watch source code and run tests accordingly"
+#MISE description="Watch source code and run tests accordingly"
 
 set -o nounset
 set -o errexit

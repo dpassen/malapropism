@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# mise description="Lint source code using clj-kondo"
+#MISE description="Lint source code using clj-kondo"
 
 set -o nounset
 set -o errexit

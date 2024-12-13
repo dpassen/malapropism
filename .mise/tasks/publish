@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# mise description="Deploy to Clojars"
+#MISE description="Deploy to Clojars"
 
 set -o nounset
 set -o errexit

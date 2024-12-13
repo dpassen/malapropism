@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# mise description="Lint source code using splint"
+#MISE description="Lint source code using splint"
 
 set -o nounset
 set -o errexit

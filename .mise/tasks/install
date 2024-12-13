@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# mise description="Install locally"
+#MISE description="Install locally"
 
 set -o nounset
 set -o errexit
