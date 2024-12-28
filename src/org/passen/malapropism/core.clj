@@ -10,6 +10,7 @@
    [org.passen.malapropism.environment-variables :as environment-variables]
    [org.passen.malapropism.system-properties :as system-properties])
   (:import
+   (clojure.lang ExceptionInfo)
    (java.io PushbackReader)))
 
 (def ^:private transformer
@@ -21,13 +22,9 @@
 (defn with-schema
   "Initializes malapropism with a malli schema."
   [schema]
-  (let [decode   (m/decoder schema transformer)
-        explain  (m/explainer schema)
-        validate (m/validator schema)]
-    {::decode   decode
-     ::explain  explain
-     ::schema   schema
-     ::validate validate}))
+  (let [coerce (m/coercer schema transformer)]
+    {::coerce coerce
+     ::schema schema}))
 
 (defn with-values-from-map
   "Reads configuration values from a map. This is foundational;
@@ -71,18 +68,18 @@
   Returns the coerced configuration data if valid,
   throws an exception if not. verbose? flag controls
   whether the ex-data contains the original values."
-  [{::keys [decode explain schema validate values]} & {:keys [verbose?]}]
-  (let [transformed-values (decode values)]
-    (if (validate transformed-values)
-      transformed-values
-      (let [explanation (explain transformed-values)]
+  [{::keys [coerce schema values]} & {:keys [verbose?]}]
+  (try
+    (coerce values)
+    (catch ExceptionInfo e
+      (let [{{:keys [explain]} :data} (ex-data e)]
         (throw
          (ex-info
           "Config values do not match schema!"
           (cond->
-           {:humanized (me/humanize explanation)
+           {:humanized (me/humanize explain)
             :schema    schema}
 
             verbose?
-            (assoc :errors (:errors explanation)
+            (assoc :errors (:errors explain)
                    :values values))))))))
