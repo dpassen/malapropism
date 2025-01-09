@@ -3,7 +3,7 @@
    [clojure.java.io :as io]
    [clojure.test :refer [deftest is]]
    [matcher-combinators.matchers :as matchers]
-   [matcher-combinators.test]
+   [matcher-combinators.test :refer [thrown-match?]]
    [mockfn.clj-test :refer [providing testing]]
    [org.passen.malapropism.core :as malapropism]
    [org.passen.malapropism.environment-variables :as environment-variables]
