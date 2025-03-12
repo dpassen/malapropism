@@ -42,9 +42,10 @@
   (log/info "Populating from file")
   (with-values-from-map
     config
-    (-> (io/reader file)
-        PushbackReader/new
-        edn/read)))
+    (with-open [reader (io/reader file)]
+      (-> reader
+          PushbackReader/new
+          edn/read))))
 
 (defn with-values-from-env
   "Reads configuration values from the process's environment variables."
