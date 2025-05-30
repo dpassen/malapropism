@@ -10,8 +10,6 @@
 
 (defn parse-key
   [k]
-  (let [segments (str/split k #"\.")]
-    (->> segments
-         (map csk/->kebab-case)
-         (str/join \-)
-         keyword)))
+  (-> k
+      (str/replace \. \-)
+      csk/->kebab-case-keyword))
