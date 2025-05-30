@@ -127,8 +127,7 @@
                   :scm-rev "zyx987"
                   :port    3500}]
       (is (thrown-match?
-           (matchers/match-with
-            [map? matchers/equals]
+           (matchers/nested-equals
             {:schema schema
              :humanized
              {:env-key vector?}})
