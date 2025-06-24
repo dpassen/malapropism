@@ -24,8 +24,8 @@
   :splint
   {:deps
    {io.github.noahtheduke/splint
-    {:git/tag "v1.20.0"
-     :git/sha "a288e27"}}
+    {:git/tag "v1.21.0"
+     :git/sha "a21d00d"}}
    :main-opts ["-m" "noahtheduke.splint"]}
   :test
   {:extra-deps
