@@ -12,4 +12,4 @@
   [k]
   (-> k
       (str/replace \. \-)
-      csk/->kebab-case-keyword))
+      (csk/->kebab-case-keyword)))

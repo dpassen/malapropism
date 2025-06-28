@@ -44,8 +44,8 @@
     config
     (with-open [reader (io/reader file)]
       (-> reader
-          PushbackReader/new
-          edn/read))))
+          (PushbackReader/new)
+          (edn/read)))))
 
 (defn with-values-from-env
   "Reads configuration values from the process's environment variables."
