@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-#MISE description="Lint source code"
-#MISE depends=["lint:kondo", "lint:splint"]
-
-set -o nounset
-set -o errexit
-set -o pipefail

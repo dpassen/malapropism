@@ -42,5 +42,8 @@ jobs:
         with:
           experimental: true
 
+      - name: Install just
+        uses: extractions/setup-just@v3
+
       - name: Run Reflection Checker
-        run: mise run check
+        run: just check

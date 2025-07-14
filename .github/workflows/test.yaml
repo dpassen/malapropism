@@ -42,5 +42,8 @@ jobs:
         with:
           experimental: true
 
+      - name: Install just
+        uses: extractions/setup-just@v3
+
       - name: Run Unit Tests
-        run: mise run test:run
+        run: just test

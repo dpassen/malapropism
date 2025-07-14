@@ -46,5 +46,8 @@ jobs:
         with:
           experimental: true
 
+      - name: Install just
+        uses: extractions/setup-just@v3
+
       - name: Run Linter
-        run: mise run lint:all
+        run: just lint
