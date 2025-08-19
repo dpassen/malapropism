@@ -38,7 +38,7 @@ jobs:
         run: clojure -P -X:check:test
 
       - name: Install Mise
-        uses: jdx/mise-action@v2
+        uses: jdx/mise-action@v3
         with:
           experimental: true
 
