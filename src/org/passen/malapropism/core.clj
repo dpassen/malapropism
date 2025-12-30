@@ -76,7 +76,7 @@
   (let [transformed-values (decode values)]
     (if (validate transformed-values)
       transformed-values
-      (let [explanation (explain transformed-values)]
+      (let [{:keys [errors] :as explanation} (explain transformed-values)]
         (throw
          (ex-info
           "Config values do not match schema!"
@@ -85,5 +85,5 @@
             :schema    schema}
 
             verbose?
-            (assoc :errors (:errors explanation)
+            (assoc :errors errors
                    :values values))))))))
