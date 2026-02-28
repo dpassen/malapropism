@@ -80,10 +80,8 @@
         (throw
          (ex-info
           "Config values do not match schema!"
-          (cond->
-           {:humanized (me/humanize explanation)
-            :schema    schema}
-
+          (cond-> {:humanized (me/humanize explanation)
+                   :schema    schema}
             verbose?
             (assoc :errors errors
                    :values values))))))))
