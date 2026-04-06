@@ -43,7 +43,7 @@ jobs:
           experimental: true
 
       - name: Install just
-        uses: extractions/setup-just@v3
+        uses: extractions/setup-just@v4
 
       - name: Run Unit Tests
         run: just test
