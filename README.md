@@ -1,5 +1,7 @@
 # malapropism
 
+![malapropism banner](https://raw.githubusercontent.com/dpassen/malapropism/main/assets/malapropism-banner.svg)
+
 [![test](https://github.com/dpassen/malapropism/actions/workflows/test.yaml/badge.svg)](https://github.com/dpassen/malapropism/actions/workflows/test.yaml)
 [![lint](https://github.com/dpassen/malapropism/actions/workflows/lint.yaml/badge.svg)](https://github.com/dpassen/malapropism/actions/workflows/lint.yaml)
 [![check](https://github.com/dpassen/malapropism/actions/workflows/check.yaml/badge.svg)](https://github.com/dpassen/malapropism/actions/workflows/check.yaml)

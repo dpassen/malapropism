@@ -1,0 +1,135 @@
+<svg
+  width="1200"
+  height="360"
+  viewBox="0 0 1200 360"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  role="img"
+  aria-labelledby="title desc"
+>
+  <title id="title">malapropism README banner</title>
+  <desc id="desc">
+    malapropism banner showing configuration values becoming validated Clojure
+    data.
+  </desc>
+  <rect width="1200" height="360" rx="36" fill="#0F172A" />
+  <path
+    d="M0 288C154 236 281 250 425 291C603 342 744 349 920 286C1033 245 1126 236 1200 255V360H0V288Z"
+    fill="#111827"
+  />
+
+  <g transform="translate(78 70) scale(.38)">
+    <rect
+      width="512"
+      height="512"
+      rx="112"
+      fill="#111827"
+      stroke="#334155"
+      stroke-width="10"
+    />
+
+    <g stroke-linecap="round" stroke-linejoin="round">
+      <rect
+        x="72"
+        y="92"
+        width="184"
+        height="82"
+        rx="22"
+        fill="#1E293B"
+        stroke="#A78BFA"
+        stroke-width="12"
+      />
+      <path d="M106 123h48M106 145h102" stroke="#C4B5FD" stroke-width="12" />
+
+      <rect
+        x="72"
+        y="215"
+        width="184"
+        height="82"
+        rx="22"
+        fill="#1E293B"
+        stroke="#818CF8"
+        stroke-width="12"
+      />
+      <path d="M106 246h72M106 268h102" stroke="#A5B4FC" stroke-width="12" />
+
+      <rect
+        x="72"
+        y="338"
+        width="184"
+        height="82"
+        rx="22"
+        fill="#1E293B"
+        stroke="#38BDF8"
+        stroke-width="12"
+      />
+      <path d="M106 369h92M106 391h102" stroke="#7DD3FC" stroke-width="12" />
+
+      <path
+        d="M270 133h30c25 0 31 47 50 74M270 256h66M270 379h30c25 0 31-47 50-74"
+        stroke="#64748B"
+        stroke-width="16"
+      />
+
+      <path
+        d="M356 174l82 32v66c0 65-34 108-82 132-48-24-82-67-82-132v-66l82-32Z"
+        fill="#312E81"
+        stroke="#C4B5FD"
+        stroke-width="16"
+      />
+      <path d="M316 286l28 29 54-67" stroke="#F8FAFC" stroke-width="22" />
+    </g>
+  </g>
+
+  <text
+    x="320"
+    y="126"
+    fill="#F8FAFC"
+    font-family="ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+    font-size="72"
+    font-weight="800"
+    letter-spacing="-2"
+  >
+    malapropism
+  </text>
+  <text
+    x="324"
+    y="174"
+    fill="#CBD5E1"
+    font-family="ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+    font-size="28"
+  >
+    Flexible, schema-validated configuration for Clojure.
+  </text>
+
+  <g transform="translate(305 215)">
+    <rect width="870" height="72" rx="18" fill="#020617" stroke="#334155" />
+    <text
+      x="180"
+      y="46"
+      fill="#94A3B8"
+      text-anchor="middle"
+      font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+      font-size="25"
+    >
+      PORT=&quot;8080&quot;
+    </text>
+    <path
+      d="M370 36h130m-18-14 18 14-18 14"
+      stroke="#475569"
+      stroke-width="4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <text
+      x="690"
+      y="46"
+      fill="#34D399"
+      text-anchor="middle"
+      font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+      font-size="25"
+    >
+      {:port 8080} ✓
+    </text>
+  </g>
+</svg>
