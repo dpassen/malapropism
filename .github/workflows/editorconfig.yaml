@@ -15,7 +15,7 @@ jobs:
         uses: editorconfig-checker/action-editorconfig-checker@main
 
       - name: Install Mise
-        uses: jdx/mise-action@v4
+        uses: jdx/mise-action@v4.2.3
         with:
           experimental: true
 
