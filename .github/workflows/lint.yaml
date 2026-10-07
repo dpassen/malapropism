@@ -41,11 +41,6 @@ jobs:
       - name: Install ripgrep
         run: sudo apt-get install ripgrep
 
-      - name: Install Mise
-        uses: jdx/mise-action@v5
-        with:
-          experimental: true
-
       - name: Install just
         uses: extractions/setup-just@v4
 

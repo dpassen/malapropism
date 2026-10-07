@@ -37,11 +37,6 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: clojure -P -X:check:test
 
-      - name: Install Mise
-        uses: jdx/mise-action@v5
-        with:
-          experimental: true
-
       - name: Install just
         uses: extractions/setup-just@v4
 
